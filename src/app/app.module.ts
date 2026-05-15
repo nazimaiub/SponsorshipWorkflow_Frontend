@@ -7,6 +7,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MainLayoutComponent } from './layout/main-layout/main-layout.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from './core/interceptors/auth.interceptor';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -17,6 +19,8 @@ import { AuthInterceptor } from './core/interceptors/auth.interceptor';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    MatSidenavModule,
+    MatButtonModule,
     BrowserAnimationsModule
   ],
   providers: [

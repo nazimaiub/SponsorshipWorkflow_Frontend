@@ -1,72 +1,76 @@
-<div class="page">
+<table mat-table [dataSource]="requests">
 
-  <div class="top-bar">
-    <h2>All Requests</h2>
+  <!-- ID -->
+  <ng-container matColumnDef="id">
 
-    <mat-form-field appearance="outline">
-      <mat-label>Search</mat-label>
-      <input matInput [(ngModel)]="searchText" (input)="applyFilter()">
-    </mat-form-field>
-  </div>
+    <th mat-header-cell *matHeaderCellDef>
+      ID
+    </th>
 
-  <mat-card>
+    <td mat-cell *matCellDef="let element">
+      {{ element.id }}
+    </td>
 
-    <table mat-table [dataSource]="filteredData">
+  </ng-container>
 
-      <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef>ID</th>
-        <td mat-cell *matCellDef="let item">{{item.id}}</td>
-      </ng-container>
+  <!-- Title -->
+  <ng-container matColumnDef="title">
 
-      <ng-container matColumnDef="title">
-        <th mat-header-cell *matHeaderCellDef>Title</th>
-        <td mat-cell *matCellDef="let item">{{item.title}}</td>
-      </ng-container>
+    <th mat-header-cell *matHeaderCellDef>
+      Title
+    </th>
 
-      <ng-container matColumnDef="status">
-        <th mat-header-cell *matHeaderCellDef>Status</th>
-        <td mat-cell *matCellDef="let item">
-          <span [ngClass]="item.status.toLowerCase()" class="badge">
-            {{item.status}}
-          </span>
-        </td>
-      </ng-container>
+    <td mat-cell *matCellDef="let element">
+      {{ element.title }}
+    </td>
 
-      <ng-container matColumnDef="createdAt">
-        <th mat-header-cell *matHeaderCellDef>Created</th>
-        <td mat-cell *matCellDef="let item">
-          {{item.createdAt | date:'short'}}
-        </td>
-      </ng-container>
+  </ng-container>
 
-      <ng-container matColumnDef="action">
-        <th mat-header-cell *matHeaderCellDef>Action</th>
-        <td mat-cell *matCellDef="let item">
+  <!-- Status -->
+  <ng-container matColumnDef="status">
 
-          <button mat-button color="primary">View</button>
+    <th mat-header-cell *matHeaderCellDef>
+      Status
+    </th>
 
-          <button
-            mat-button
-            color="accent"
-            *ngIf="userRole === 'Admin'">
-            Approve
-          </button>
+    <td mat-cell *matCellDef="let element">
+      {{ element.status }}
+    </td>
 
-          <button
-            mat-button
-            color="warn"
-            *ngIf="userRole === 'Admin'">
-            Reject
-          </button>
+  </ng-container>
 
-        </td>
-      </ng-container>
+  <!-- Created -->
+  <ng-container matColumnDef="created">
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <th mat-header-cell *matHeaderCellDef>
+      Created
+    </th>
 
-    </table>
+    <td mat-cell *matCellDef="let element">
+      {{ element.createdAt }}
+    </td>
 
-  </mat-card>
+  </ng-container>
 
-</div>
+  <!-- Action -->
+  <ng-container matColumnDef="action">
+
+    <th mat-header-cell *matHeaderCellDef>
+      Action
+    </th>
+
+    <td mat-cell *matCellDef="let element">
+
+      <button mat-button>
+        View
+      </button>
+
+    </td>
+
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+</table>

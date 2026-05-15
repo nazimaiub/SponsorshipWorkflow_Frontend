@@ -8,8 +8,27 @@ import { RequestService } from 'src/app/services/request.service';
 })
 export class AllRequestsComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'title', 'status', 'createdAt', 'action'];
-
+  displayedColumns: string[] = [
+  'id',
+  'title',
+  'status',
+  'created',
+  'action'
+];
+ requests = [
+    {
+      id: 1,
+      title: 'Tech Conference Sponsorship',
+      status: 'Pending',
+      createdAt: '2026-05-16'
+    },
+    {
+      id: 2,
+      title: 'University Event',
+      status: 'Approved',
+      createdAt: '2026-05-15'
+    }
+  ];
   dataSource: any[] = [];
   filteredData: any[] = [];
 

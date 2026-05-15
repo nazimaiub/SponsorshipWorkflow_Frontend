@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-main-layout',
@@ -7,9 +8,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainLayoutComponent implements OnInit {
 
-  constructor() { }
+  role: string | null = '';
+
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
+
+    this.role = localStorage.getItem('role');
+
   }
 
+  logout(): void {
+
+    localStorage.clear();
+
+    this.router.navigate(['/auth/login']);
+  }
 }

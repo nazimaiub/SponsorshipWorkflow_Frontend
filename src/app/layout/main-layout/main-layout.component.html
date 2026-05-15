@@ -1,1 +1,66 @@
-<router-outlet></router-outlet>
+<mat-sidenav-container class="layout-container">
+
+  <mat-sidenav mode="side" opened>
+
+    <div class="menu-container">
+
+      <!-- Requestor -->
+       <div *ngIf="role === 'requestor'">
+        <a routerLink="/requestor">
+            My Requests
+        </a>
+      </div>
+      <div *ngIf="role === 'requestor'">
+
+        <a routerLink="/requestor/create">
+            Create Request
+        </a>
+        </div>
+     
+      <!-- Manager -->
+      <div *ngIf="role === 'manager'">
+
+        <a routerLink="/manager">
+          Pending Approvals
+        </a>
+
+      </div>
+
+      <!-- Finance -->
+      <div *ngIf="role === 'finance'">
+
+        <a routerLink="/finance">
+          Finance Review
+        </a>
+
+      </div>
+
+      <!-- Admin -->
+      <div *ngIf="role === 'admin'">
+
+        <a routerLink="/admin">
+          All Requests
+        </a>
+
+      </div>
+
+      <button
+        mat-raised-button
+        color="warn"
+        (click)="logout()">
+
+        Logout
+
+      </button>
+
+    </div>
+
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+
+    <router-outlet></router-outlet>
+
+  </mat-sidenav-content>
+
+</mat-sidenav-container>
