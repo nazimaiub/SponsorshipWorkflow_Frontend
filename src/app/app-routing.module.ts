@@ -4,7 +4,14 @@ import { MainLayoutComponent } from './layout/main-layout/main-layout.component'
 
 const routes: Routes = [
 
-  // Auth should be outside layout
+  // default route → auth/login
+  {
+    path: '',
+    redirectTo: 'auth/login',
+    pathMatch: 'full'
+  },
+
+  // Auth module
   {
     path: 'auth',
     loadChildren: () =>
@@ -12,16 +19,11 @@ const routes: Routes = [
         .then(m => m.AuthModule)
   },
 
-  // Main application layout
+  // Main layout routes
   {
     path: '',
     component: MainLayoutComponent,
     children: [
-      {
-        path: '',
-        redirectTo: 'auth/login',
-        pathMatch: 'full'
-      },
       {
         path: 'requestor',
         loadChildren: () =>
@@ -49,7 +51,6 @@ const routes: Routes = [
     ]
   },
 
-  // fallback route (optional but good)
   {
     path: '**',
     redirectTo: 'auth/login'
