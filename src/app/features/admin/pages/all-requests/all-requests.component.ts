@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { RequestService } from 'src/app/services/request.service';
 
 @Component({
   selector: 'app-all-requests',
@@ -7,9 +8,47 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AllRequestsComponent implements OnInit {
 
-  constructor() { }
+  displayedColumns: string[] = ['id', 'title', 'status', 'createdAt', 'action'];
+
+  dataSource: any[] = [];
+  filteredData: any[] = [];
+
+  searchText: string = '';
+
+  userRole: string = '';
+
+  constructor(private requestService: RequestService) {}
 
   ngOnInit(): void {
+    this.loadData();
+
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    this.userRole = user.role;
   }
 
+  loadData(): void {
+    this.requestService.getAllRequests().subscribe({
+      next: (res) => {
+        this.dataSource = res;
+        this.filteredData = res;
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    });
+  }
+
+  applyFilter(): void {
+    const text = this.searchText.toLowerCase().trim();
+
+    this.filteredData = this.dataSource.filter(item =>
+      item.title?.toLowerCase().includes(text) ||
+      item.status?.toLowerCase().includes(text) ||
+      item.id?.toString().includes(text)
+    );
+  }
+
+  isAdmin(): boolean {
+    return this.userRole === 'Admin';
+  }
 }
