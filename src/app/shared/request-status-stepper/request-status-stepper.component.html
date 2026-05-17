@@ -1,0 +1,32 @@
+<div class="stepper">
+
+  <div *ngFor="let step of steps; let i = index" class="step">
+
+    <div class="circle"
+         [ngClass]="{
+           'completed': isCompleted(i),
+           'active': isActive(i),
+           'disabled': isDisabled(i)
+         }">
+      {{ i + 1 }}
+    </div>
+
+    <div class="label"
+         [ngClass]="{
+           'text-completed': isCompleted(i),
+           'text-active': isActive(i),
+           'text-disabled': isDisabled(i)
+         }">
+      {{ step }}
+    </div>
+
+    <div *ngIf="i < steps.length - 1" class="line"
+         [ngClass]="{
+           'line-completed': i < currentIndex,
+           'line-disabled': i >= currentIndex
+         }">
+    </div>
+
+  </div>
+
+</div>

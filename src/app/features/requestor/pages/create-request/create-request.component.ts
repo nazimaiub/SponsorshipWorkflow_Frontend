@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { RequestService } from 'src/app/services/request.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -12,7 +12,10 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 export class CreateRequestComponent implements OnInit {
   isViewMode = false;
   isDraftStatus = false;
+  isManagerApproveStatus = false;
+  isFinanceApproveStatus = false;
   userRole: string = '';
+  status: string = 'Draft'; // default
   constructor(private fb: FormBuilder,
     private requestService: RequestService,
     private snackBar: MatSnackBar,
@@ -44,6 +47,9 @@ export class CreateRequestComponent implements OnInit {
 
       this.getRequestById(id);
     }
+    else {
+      this.isDraftStatus = true;
+    }
   }
 
   getRequestById(id: string) {
@@ -51,6 +57,7 @@ export class CreateRequestComponent implements OnInit {
     this.requestService.getRequestById(id).subscribe({
 
       next: (data) => {
+        this.status=data.status;
 
         this.requestForm.patchValue({
           id: data.id,
@@ -66,9 +73,32 @@ export class CreateRequestComponent implements OnInit {
 
         // Draft হলে editable
 
-        if (data.status === 'Draft') {
+        if (data.status === 'Draft' || data.status === 'Rejected By Manager') {
 
           this.isDraftStatus = true;
+          if (data.status === 'Rejected By Manager') {
+
+            this.requestForm.patchValue({
+              remarks: data.managerRemarks
+            });
+          }
+          this.requestForm.enable();
+
+        }
+        else if ((data.status === 'Pending Manager Approval' || data.status === 'Rejected By Finance') && this.userRole == 'manager') {
+
+          this.isManagerApproveStatus = true;
+          if (data.status === 'Rejected By Finance') {
+
+            this.requestForm.patchValue({
+              remarks: data.financeRemarks
+            });
+          }
+          this.requestForm.enable();
+        }
+        else if (data.status === 'Pending Finance Review' && this.userRole == 'finance') {
+
+          this.isFinanceApproveStatus = true;
 
           this.requestForm.enable();
 
@@ -82,6 +112,134 @@ export class CreateRequestComponent implements OnInit {
       }
     });
   }
+  CancelRequest() {
+    const id = this.route.snapshot.paramMap.get('id');
+    if (!id) {
+      return;
+    }
+    this.requestService.cancelRequest(id).subscribe({
+      next: (data) => {
+        this.requestForm.patchValue({
+          id: data.id
+        });
+        this.snackBar.open(data.message, 'Close', {
+          duration: 3000
+        }).afterDismissed().subscribe(() => {
+          this.router.navigate(['/requestor']);
+        });
+      },
+      error: () => {
+        this.snackBar.open('Failed to cancel', 'Close', {
+          duration: 3000
+        });
+      }
+    });
+
+  }
+
+  approveManager() {
+    const id = this.route.snapshot.paramMap.get('id');
+    const remarks = this.requestForm.get('remarks')?.value;
+    if (!id) {
+      return;
+    }
+    this.requestService.approveManager(id, remarks).subscribe({
+      next: (data) => {
+        this.requestForm.patchValue({
+          id: data.id
+        });
+        this.snackBar.open(data.message, 'Close', {
+          duration: 3000
+        }).afterDismissed().subscribe(() => {
+          this.router.navigate(['/requestor']);
+        });
+      },
+      error: () => {
+        this.snackBar.open('Failed to approve', 'Close', {
+          duration: 3000
+        });
+      }
+    });
+
+  }
+
+  rejectManager() {
+    const id = this.route.snapshot.paramMap.get('id');
+    const remarks = this.requestForm.get('remarks')?.value;
+    if (!id) {
+      return;
+    }
+    this.requestService.rejectManager(id, remarks).subscribe({
+      next: (data) => {
+        this.requestForm.patchValue({
+          id: data.id
+        });
+        this.snackBar.open(data.message, 'Close', {
+          duration: 3000
+        }).afterDismissed().subscribe(() => {
+          this.router.navigate(['/requestor']);
+        });
+      },
+      error: () => {
+        this.snackBar.open('Failed to reject', 'Close', {
+          duration: 3000
+        });
+      }
+    });
+  }
+
+  approveFinance() {
+    const id = this.route.snapshot.paramMap.get('id');
+    const remarks = this.requestForm.get('remarks')?.value;
+    if (!id) {
+      return;
+    }
+    this.requestService.approveFinance(id, remarks).subscribe({
+      next: (data) => {
+        this.requestForm.patchValue({
+          id: data.id
+        });
+        this.snackBar.open(data.message, 'Close', {
+          duration: 3000
+        }).afterDismissed().subscribe(() => {
+          this.router.navigate(['/requestor']);
+        });
+      },
+      error: () => {
+        this.snackBar.open('Failed to approve', 'Close', {
+          duration: 3000
+        });
+      }
+    });
+
+  }
+
+  rejectFinance() {
+    const id = this.route.snapshot.paramMap.get('id');
+    const remarks = this.requestForm.get('remarks')?.value;
+    if (!id) {
+      return;
+    }
+    this.requestService.rejectFinance(id, remarks).subscribe({
+      next: (data) => {
+        this.requestForm.patchValue({
+          id: data.id
+        });
+        this.snackBar.open(data.message, 'Close', {
+          duration: 3000
+        }).afterDismissed().subscribe(() => {
+          this.router.navigate(['/requestor']);
+        });
+      },
+      error: () => {
+        this.snackBar.open('Failed to reject', 'Close', {
+          duration: 3000
+        });
+      }
+    });
+
+  }
+
 
   getVisibleRemark(data: any): string {
 
@@ -91,10 +249,10 @@ export class CreateRequestComponent implements OnInit {
         return data.requestorRemarks;
 
       case 'Pending Manager Approval':
-        return data.managerRemarks;
+        return data.requestorRemarks;
 
       case 'Pending Finance Review':
-        return data.financeRemarks;
+        return data.managerRemarks;
 
       default:
         return '';

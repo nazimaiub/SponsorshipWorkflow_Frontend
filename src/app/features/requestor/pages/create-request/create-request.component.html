@@ -1,141 +1,99 @@
-<div class="page-container">
+<div class="page-layout">
 
-  <h2 class="page-title">
-    Create Sponsorship Request
-  </h2>
+  <!-- LEFT SIDE (FORM) -->
+  <div class="form-section">
 
-  <form [formGroup]="requestForm">
+    <div class="page-container">
 
-    <!-- ROW 1 -->
-    <div class="row">
+      <h2 class="page-title">
+        Sponsorship Request Form
+      </h2>
 
-      <mat-form-field appearance="outline">
+      <form [formGroup]="requestForm">
 
-        <mat-label>Request Title</mat-label>
+        <!-- ROW 1 -->
+        <div class="row">
+          <mat-form-field appearance="outline">
+            <mat-label>Request Title</mat-label>
+            <input matInput formControlName="requestTitle">
+          </mat-form-field>
 
-        <input
-          matInput
-          formControlName="requestTitle">
+          <mat-form-field appearance="outline">
+            <mat-label>Department</mat-label>
+            <input matInput formControlName="department">
+          </mat-form-field>
+        </div>
 
-      </mat-form-field>
+        <!-- ROW 2 -->
+        <div class="row">
+          <mat-form-field appearance="outline">
+            <mat-label>Sponsorship Type</mat-label>
+            <input matInput formControlName="sponsorshipType">
+          </mat-form-field>
 
-      <mat-form-field appearance="outline">
+          <mat-form-field appearance="outline">
+            <mat-label>Event Name</mat-label>
+            <input matInput formControlName="eventName">
+          </mat-form-field>
+        </div>
 
-        <mat-label>Department</mat-label>
+        <!-- ROW 3 -->
+        <div class="row">
+          <mat-form-field appearance="outline">
+            <mat-label>Event Date</mat-label>
+            <input matInput type="date" formControlName="eventDate">
+          </mat-form-field>
 
-        <input
-          matInput
-          formControlName="department">
+          <mat-form-field appearance="outline">
+            <mat-label>Requested Amount</mat-label>
+            <input matInput type="number" formControlName="requestedAmount">
+          </mat-form-field>
+        </div>
 
-      </mat-form-field>
+        <!-- PURPOSE -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Purpose / Justification</mat-label>
+          <textarea matInput rows="4" formControlName="purpose"></textarea>
+        </mat-form-field>
+
+        <!-- REMARKS -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Remarks {{status}}</mat-label>
+          <textarea matInput rows="3" formControlName="remarks"></textarea>
+        </mat-form-field>
+
+        <!-- BUTTONS -->
+        <div class="btn-group">
+
+          <ng-container *ngIf="isDraftStatus">
+            <button mat-raised-button color="primary" type="button" (click)="submitRequest()">Submit</button>
+            <button mat-raised-button color="accent" type="button" (click)="saveDraft()">Save Draft</button>
+            <button mat-raised-button color="warn" type="button" (click)="CancelRequest()">Cancel</button>
+          </ng-container>
+
+          <ng-container *ngIf="isManagerApproveStatus">
+            <button mat-raised-button color="primary" type="button" (click)="approveManager()">Approve</button>
+            <button mat-raised-button color="warn" type="button" (click)="rejectManager()">Reject</button>
+          </ng-container>
+
+          <ng-container *ngIf="isFinanceApproveStatus">
+            <button mat-raised-button color="primary" type="button" (click)="approveFinance()">Approve</button>
+            <button mat-raised-button color="warn" type="button" (click)="rejectFinance()">Reject</button>
+          </ng-container>
+
+        </div>
+
+      </form>
 
     </div>
 
-    <!-- ROW 2 -->
-    <div class="row">
+  </div>
 
-      <mat-form-field appearance="outline">
+  <!-- RIGHT SIDE (STEPPER) -->
+  <div class="stepper-section">
 
-        <mat-label>Sponsorship Type</mat-label>
+    <app-request-status-stepper [status]="status"></app-request-status-stepper>
 
-        <input
-          matInput
-          formControlName="sponsorshipType">
-
-      </mat-form-field>
-
-      <mat-form-field appearance="outline">
-
-        <mat-label>Event Name</mat-label>
-
-        <input
-          matInput
-          formControlName="eventName">
-
-      </mat-form-field>
-
-    </div>
-
-    <!-- ROW 3 -->
-    <div class="row">
-
-      <mat-form-field appearance="outline">
-
-        <mat-label>Event Date</mat-label>
-
-        <input
-          matInput
-          type="date"
-          formControlName="eventDate">
-
-      </mat-form-field>
-
-      <mat-form-field appearance="outline">
-
-        <mat-label>Requested Amount</mat-label>
-
-        <input
-          matInput
-          type="number"
-          formControlName="requestedAmount">
-
-      </mat-form-field>
-
-    </div>
-
-    <!-- PURPOSE -->
-    <mat-form-field appearance="outline" class="full-width">
-
-      <mat-label>Purpose / Justification</mat-label>
-
-      <textarea
-        matInput
-        rows="4"
-        formControlName="purpose">
-      </textarea>
-
-    </mat-form-field>
-
-    <!-- REMARKS -->
-    <mat-form-field appearance="outline" class="full-width">
-
-      <mat-label>Remarks</mat-label>
-
-      <textarea
-        matInput
-        rows="3"
-        formControlName="remarks">
-      </textarea>
-
-    </mat-form-field>
-
-    <!-- BUTTONS -->
-    <div
-        class="btn-group"
-        *ngIf="!isViewMode || isDraftStatus">
-
-      <button
-        mat-raised-button
-        color="primary"
-        type="button"
-        (click)="submitRequest()">
-
-        Submit
-
-      </button>
-
-      <button
-        mat-raised-button
-        color="accent"
-        type="button"
-        (click)="saveDraft()">
-
-        Save Draft
-
-      </button>
-    </div>
-
-
-  </form>
+  </div>
 
 </div>

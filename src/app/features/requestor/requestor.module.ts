@@ -10,11 +10,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
+import { RequestStatusStepperComponent } from 'src/app/shared/request-status-stepper/request-status-stepper.component';
 
 @NgModule({
   declarations: [
     MyRequestsComponent,
-    CreateRequestComponent
+    CreateRequestComponent,
+    RequestStatusStepperComponent
   ],
   imports: [
     CommonModule,
@@ -32,7 +34,8 @@ import { MatTableModule } from '@angular/material/table';
     MatTableModule
   ],
   exports: [
-    MyRequestsComponent
+    MyRequestsComponent,
+    RequestStatusStepperComponent
   ]
 })
 export class RequestorModule { }
