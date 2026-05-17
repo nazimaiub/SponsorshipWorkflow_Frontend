@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { SponsorshipRequest } from '../features/requestor/models/sponsorship-request';
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +16,22 @@ export class RequestService {
     return this.http.get<any[]>(`${this.baseUrl}/all`);
   }
 
-  getById(id: number): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/${id}`);
+  // SAVE AS DRAFT
+  saveDraft(data: SponsorshipRequest): Observable<any> {
+    return this.http.post(`${this.baseUrl}/draft`,data);
+  }
+
+  // SUBMIT REQUEST
+    submitRequest(data: SponsorshipRequest): Observable<any> {
+    return this.http.post(`${this.baseUrl}/submit`,data);
+  }
+  // OPTIONAL: GET MY REQUESTS
+   GetAllMyRequests(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/my-requests`);
+  }
+
+  getRequestById(id: string): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/request-by-id/${id}`);
   }
 
   create(data: any): Observable<any> {
