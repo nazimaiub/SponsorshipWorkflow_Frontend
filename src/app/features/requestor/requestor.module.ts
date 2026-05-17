@@ -30,6 +30,9 @@ import { MatTableModule } from '@angular/material/table';
     MatFormFieldModule,
     MatButtonModule,
     MatTableModule
+  ],
+  exports: [
+    MyRequestsComponent
   ]
 })
 export class RequestorModule { }

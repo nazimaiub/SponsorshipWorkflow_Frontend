@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { ManagerRoutingModule } from './manager-routing.module';
 import { PendingApprovalsComponent } from './pages/pending-approvals/pending-approvals.component';
+import { RequestorModule } from '../requestor/requestor.module';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { PendingApprovalsComponent } from './pages/pending-approvals/pending-app
   ],
   imports: [
     CommonModule,
-    ManagerRoutingModule
+    ManagerRoutingModule,
+    RequestorModule
   ]
 })
 export class ManagerModule { }

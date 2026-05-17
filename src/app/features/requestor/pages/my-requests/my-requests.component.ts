@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { RequestService } from 'src/app/services/request.service';
 
@@ -15,9 +15,10 @@ export class MyRequestsComponent implements OnInit {
   'created',
   'action'
   ];
-
+  @Input() requests: any[] = [];
+  @Input() title: string = '';
   dataSource: any[] = [];
-  requests: any[] = [];
+  //requests: any[] = [];
   filteredData: any[] = [];
 
   searchText: string = '';
