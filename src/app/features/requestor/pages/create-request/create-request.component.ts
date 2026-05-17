@@ -103,6 +103,10 @@ export class CreateRequestComponent implements OnInit {
           this.requestForm.enable();
 
         }
+        // else if(this.userRole == 'admin')
+        // {
+        //   this.requestForm.disable();
+        // }
         else {
 
           this.isDraftStatus = false;

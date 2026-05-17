@@ -9,7 +9,7 @@ import { RequestService } from 'src/app/services/request.service';
 export class PendingApprovalsComponent implements OnInit {
   pendingRequests: any[] = [];
 
-  constructor(private requestService:RequestService) { }
+  constructor(private requestService: RequestService) { }
 
   ngOnInit(): void {
 

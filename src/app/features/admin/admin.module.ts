@@ -10,9 +10,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
+import { RequestorModule } from '../requestor/requestor.module';
+import { WorkflowHistoryComponent } from './pages/workflow-history/workflow-history.component';
 @NgModule({
   declarations: [
-    AllRequestsComponent
+    AllRequestsComponent,
+    WorkflowHistoryComponent
   ],
   imports: [
     CommonModule,
@@ -26,7 +29,8 @@ import { MatCardModule } from '@angular/material/card';
     MatButtonModule,
     MatIconModule,
     MatTableModule,
-    MatCardModule
+    MatCardModule,
+    RequestorModule
   ]
 })
 export class AdminModule { }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/core/services/auth.service';
 
@@ -18,7 +19,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-     private router: Router
+     private router: Router,
+      private snackBar: MatSnackBar,
   ) {}
 
   ngOnInit(): void {
@@ -64,6 +66,9 @@ export class LoginComponent implements OnInit {
       },
 
       error: (error) => {
+        this.snackBar.open('Failed to Login', 'Close', {
+          duration: 3000
+        });
         console.log('Login Failed', error);
       }
     });

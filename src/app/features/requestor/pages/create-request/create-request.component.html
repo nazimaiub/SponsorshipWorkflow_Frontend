@@ -63,7 +63,7 @@
         </mat-form-field>
 
         <!-- BUTTONS -->
-        <div class="btn-group">
+        <div class="btn-group" *ngIf="userRole != 'admin'">
 
           <ng-container *ngIf="isDraftStatus">
             <button mat-raised-button color="primary" type="button" (click)="submitRequest()">Submit</button>

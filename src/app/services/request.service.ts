@@ -29,6 +29,10 @@ export class RequestService {
   GetAllMyRequests(): Observable<any[]> {
     return this.http.get<any[]>(`${this.baseUrl}/my-requests`);
   }
+  
+  GetAllHistories(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/getHistories`);
+  }
 
   getRequestById(id: string): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/request-by-id/${id}`);

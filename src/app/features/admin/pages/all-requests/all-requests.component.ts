@@ -7,7 +7,7 @@ import { RequestService } from 'src/app/services/request.service';
   styleUrls: ['./all-requests.component.scss']
 })
 export class AllRequestsComponent implements OnInit {
-
+  allRequests: any[] = [];
   displayedColumns: string[] = [
   'id',
   'title',
@@ -15,20 +15,6 @@ export class AllRequestsComponent implements OnInit {
   'created',
   'action'
 ];
- requests = [
-    {
-      id: 1,
-      title: 'Tech Conference Sponsorship',
-      status: 'Pending',
-      createdAt: '2026-05-16'
-    },
-    {
-      id: 2,
-      title: 'University Event',
-      status: 'Approved',
-      createdAt: '2026-05-15'
-    }
-  ];
   dataSource: any[] = [];
   filteredData: any[] = [];
 
@@ -46,9 +32,9 @@ export class AllRequestsComponent implements OnInit {
   }
 
   loadData(): void {
-    this.requestService.getAllRequests().subscribe({
+    this.requestService.GetAllMyRequests().subscribe({
       next: (res) => {
-        this.dataSource = res;
+        this.allRequests = res;
         this.filteredData = res;
       },
       error: (err) => {
